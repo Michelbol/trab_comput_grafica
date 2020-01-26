@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trabalho de Computação Gráfica</title>
+    <script src="./lib/p5.min.js"></script>
+    <script src="./lib/sketch.min.js"></script>
+    <script src="./js/sketch.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="js/Models/Line.js"></script>
+    <script src="js/Models/Triangle.js"></script>
+    <script src="js/Models/Square.js"></script>
+    <script src="js/Models/Circle.js"></script>
+    <script src="./js/events.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<div class="container">
+    <div>
+        <h4>Desenhos</h4>
+
+        <ul class="list">
+            <li class="item">
+                <button id="btn-line"><img src="img/line.png" alt=""></button>
+            </li>
+            <li>
+                <button id="btn-triangle"><img src="img/triangle.png" alt=""></button>
+            </li>
+            <li>
+                <button id="btn-square"><img src="img/square.png" alt=""></button>
+            </li>
+            <li>
+                <button id="btn-circumference"><img src="img/circumference.png" alt=""></button>
+            </li>
+        </ul>
+    </div>
+    <ul class="d-inline ul">
+        <li class="d-inline">
+            <button id="btn-clear">Clear</button>
+        </li>
+        <li class="d-inline">
+            <button id="btn-rotate">Rotação</button>
+        </li>
+        <li class="d-inline">
+            <button id="btn-scale">M. Escala</button>
+        </li>
+        <li class="d-inline">
+            <button id="btn-translation">Translação</button>
+        </li>
+        <li class="d-inline">
+            <button id="btn-zoom">Zoom Extend</button>
+        </li>
+        <li class="d-inline">
+            <button id="btn-cancel">Cancelar Ação</button>
+        </li>
+    </ul>
+    <div id="canvas">
+
+    </div>
+    <div class="tutorial">
+        <div id="explanation-line" class="d-none">
+            <ul>
+                <li>Utilize o mouse para definir os inicio e o fim de sua reta.</li>
+                <li>Clique e solte para definir o inicio.</li>
+                <li>Clique e solte para definir o fim.</li>
+            </ul>
+        </div>
+        <div id="explanation-triangle" class="d-none">
+            <ul>
+                <li>Utilize o mouse para definir os três pontos de seu triângulo.</li>
+                <li>Clique e solte para definir o ponto 1.</li>
+                <li>Clique e solte para definir o ponto 2.</li>
+                <li>Clique e solte para definir o ponto 3 e Fim!.</li>
+            </ul>
+        </div>
+        <div id="explanation-square" class="d-none">
+            <ul>
+                <li>Utilize o mouse para definir dois pontos de seu quadrado e nós fazemos o restante!.</li>
+                <li>Clique e solte para definir o ponto 1.</li>
+                <li>Clique e solte para definir o ponto 2 e Fim!.</li>
+            </ul>
+        </div>
+        <div id="explanation-circle" class="d-none">
+            <ul>
+                <li>Utilize o mouse para definir dois pontos de seu circulo o Centro e depois o diâmetro!.</li>
+                <li>Clique e solte para definir o Centro.</li>
+                <li>Clique e solte para definir o diâmetro!.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
