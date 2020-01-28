@@ -92,7 +92,12 @@ function clickBtnCircumference(){
 
 function clickBtnCancel(e){
     e.preventDefault();
-    creatingObject.object.tutorialHidden();
+    if(selectingObject.flag){
+        selectingObject.object.deSelect();
+    }
+    if(creatingObject.flag){
+        creatingObject.object.tutorialHidden();
+    }
     freeMouse();
 }
 
