@@ -94,8 +94,29 @@ class Triangle{
         triangle(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y);
     }
     clear(){
+        strokeWeight(3);
         erase();
         triangle(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y);
         noErase();
+        strokeWeight(weight);
+    }
+    rotate(angle){
+        this.clear();
+        stroke('red');
+        this.goToOrigin();
+        let coords2 = rotatePoint(this.pt2x, this.pt2y, angle);
+        this.pt2x = coords2.x+this.pt1x;
+        this.pt2y = coords2.y+this.pt1y;
+        let coords3 = rotatePoint(this.pt3x, this.pt3y, angle);
+        this.pt3x = coords3.x+this.pt1x;
+        this.pt3y = coords3.y+this.pt1y;
+        this.draw();
+        stroke(defaultColor);
+    }
+    goToOrigin(){
+        this.pt2x -= this.pt1x;
+        this.pt2y -= this.pt1y;
+        this.pt3x -= this.pt1x;
+        this.pt3y -= this.pt1y;
     }
 }

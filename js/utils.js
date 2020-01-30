@@ -16,3 +16,7 @@ function degreesToRadians(degrees)
     var pi = Math.PI;
     return degrees * (pi / 180);
 }
+
+function rotatePoint(x, y, angle){
+    return {x:(x*Math.cos(angle)) - (y*Math.sin(angle)), y:(x*Math.sin(angle)) + (y*Math.cos(angle))}
+}

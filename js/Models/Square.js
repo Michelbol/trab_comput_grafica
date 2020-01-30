@@ -1,35 +1,39 @@
 class Square{
 
-    constructor(pt1x, pt1y, pt2x, pt2y) {
+    constructor(pt1x, pt1y, pt3x, pt3y) {
         /*            Side 4
         //        1---------4
         // Side 1 |         | Side 3
         //        |         |
-        //        3---------2
+        //        2---------3
         //            Side 2
         */
         this.pt1x = pt1x;
         this.pt1y = pt1y;
-        this.pt2x = pt2x;
-        this.pt2y = pt2y;
+        this.pt2x = pt1x;
+        this.pt2y = pt3y;
+        this.pt3x = pt3x;
+        this.pt3y = pt3y;
+        this.pt4x = pt3x;
+        this.pt4y = pt1y;
         this.width = this.pt2x - this.pt1x;
         this.height = this.pt2y - this.pt1y;
-        this.pt3x = pt1x;
-        this.pt3y = pt1y - this.height;
-        this.pt4x = pt1x + this.width;
-        this.pt4y = pt1y;
     }
 
     draw() {
-        this.width = this.pt2x - this.pt1x;
-        this.height = this.pt2y - this.pt1y;
-        rect(this.pt1x, this.pt1y, this.width, this.height);
+        quad(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y, this.pt4x, this.pt4y);
     }
 
     setup(){
         if(isNumberFill(creatingObject.object.pt1x)){
-            creatingObject.object.pt2x = mouseX;
-            creatingObject.object.pt2y = mouseY;
+            creatingObject.object.pt3x = mouseX;
+            creatingObject.object.pt3y = mouseY;
+            creatingObject.object.pt2x = this.pt1x;
+            creatingObject.object.pt2y = this.pt3y;
+            creatingObject.object.pt4x = this.pt3x;
+            creatingObject.object.pt4y = this.pt1y;
+            creatingObject.object.width = this.pt3x - this.pt1x;
+            creatingObject.object.height = this.pt3y - this.pt1y;
             objects.squares.push(this);
             creatingObject.object.draw();
             creatingObject.object.tutorialHidden();
@@ -51,8 +55,8 @@ class Square{
     }
     select(){
         let diff1 = (validDist(mouseX - this.pt1x)) && (mouseY < this.pt1y || mouseY > (this.pt1y - this.height));
-        let diff2 = (validDist(mouseY - this.pt2y)) && (mouseX < this.pt2x || mouseX > this.pt2x - this.width);
-        let diff3 = (validDist(mouseX - this.pt2x)) && (mouseY > this.pt2y || mouseY < this.pt2y + this.height);
+        let diff2 = (validDist(mouseY - this.pt3y)) && (mouseX < this.pt3x || mouseX > this.pt3x - this.width);
+        let diff3 = (validDist(mouseX - this.pt3x)) && (mouseY > this.pt3y || mouseY < this.pt3y + this.height);
         let diff4 = (validDist(mouseY - this.pt1y)) && (mouseX < this.pt1x || mouseX > this.pt1x - this.width);
 
         if(diff1 || diff2 || diff3 || diff4){
@@ -63,7 +67,7 @@ class Square{
             selectingObject.object = this;
             this.clear();
             stroke('red');
-            rect(this.pt1x, this.pt1y, this.width, this.height);
+            quad(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y, this.pt4x, this.pt4y);
             stroke(defaultColor);
             return true;
         }
@@ -72,29 +76,37 @@ class Square{
     deSelect(){
         this.clear();
         stroke(defaultColor);
-        rect(this.pt1x, this.pt1y, this.width, this.height);
+        quad(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y, this.pt4x, this.pt4y);
     }
     clear(){
         strokeWeight(3);
         erase();
-        rect(this.pt1x, this.pt1y, this.width, this.height);
+        quad(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y, this.pt4x, this.pt4y);
         noErase();
         strokeWeight(weight);
     }
-    // rotate(angle){
-    //     this.clear();
-    //     stroke('red');
-    //     this.goToOrigin();
-    //     this.draw();
-    //     let rotateX = (this.pt2x*Math.cos(angle)) - (this.pt2y*Math.sin(angle));
-    //     let rotateY = (this.pt2x*Math.sin(angle)) + (this.pt2y*Math.cos(angle));
-    //     this.pt2x = rotate2X+this.pt1x;
-    //     this.pt2y = rotate2Y+this.pt1y;
-    //     // line(this.pt1x, this.pt1y, (this.pt2x), (this.pt2y));
-    //     stroke(defaultColor);
-    // }
-    // goToOrigin(){
-    //     this.pt2x -= this.pt1x;
-    //     this.pt2y -= this.pt1y;
-    // }
+    rotate(angle){
+        this.clear();
+        stroke('red');
+        this.goToOrigin();
+        let coords2 = rotatePoint(this.pt2x, this.pt2y, angle);
+        this.pt2x = coords2.x+this.pt1x;
+        this.pt2y = coords2.y+this.pt1y;
+        let coords3 = rotatePoint(this.pt3x, this.pt3y, angle);
+        this.pt3x = coords3.x+this.pt1x;
+        this.pt3y = coords3.y+this.pt1y;
+        let coords4 = rotatePoint(this.pt4x, this.pt4y, angle);
+        this.pt4x = coords4.x+this.pt1x;
+        this.pt4y = coords4.y+this.pt1y;
+        this.draw();
+        stroke(defaultColor);
+    }
+    goToOrigin(){
+        this.pt2x -= this.pt1x;
+        this.pt2y -= this.pt1y;
+        this.pt3x -= this.pt1x;
+        this.pt3y -= this.pt1y;
+        this.pt4x -= this.pt1x;
+        this.pt4y -= this.pt1y;
+    }
 }

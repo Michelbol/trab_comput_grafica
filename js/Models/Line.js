@@ -68,11 +68,10 @@ class Line{
         this.clear();
         stroke('red');
         this.goToOrigin();
-        let rotateX = (this.pt2x*Math.cos(angle)) - (this.pt2y*Math.sin(angle));
-        let rotateY = (this.pt2x*Math.sin(angle)) + (this.pt2y*Math.cos(angle));
-        this.pt2x = rotateX+this.pt1x;
-        this.pt2y = rotateY+this.pt1y;
-        line(this.pt1x, this.pt1y, (this.pt2x), (this.pt2y));
+        let coords = rotatePoint(this.pt2x, this.pt2y, angle);
+        this.pt2x = coords.x+this.pt1x;
+        this.pt2y = coords.y+this.pt1y;
+        this.draw();
         stroke(defaultColor);
     }
     goToOrigin(){

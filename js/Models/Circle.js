@@ -9,10 +9,6 @@ class Circle{
     }
 
     draw() {
-        let catA = this.pt2x - this.pt1x;
-        let catB = this.pt2y - this.pt1y;
-        let hypt = Math.pow(catA, 2) + Math.pow(catB, 2);
-        this.r = Math.sqrt(hypt);
         circle(this.pt1x, this.pt1y, this.r*2);
     }
 
@@ -20,6 +16,10 @@ class Circle{
         if(isNumberFill(creatingObject.object.pt1x)){
             creatingObject.object.pt2x = mouseX;
             creatingObject.object.pt2y = mouseY;
+            let catA = this.pt2x - this.pt1x;
+            let catB = this.pt2y - this.pt1y;
+            let hypt = Math.pow(catA, 2) + Math.pow(catB, 2);
+            this.r = Math.sqrt(hypt);
             objects.circumferences.push(this);
             creatingObject.object.draw();
             creatingObject.object.tutorialHidden();
@@ -38,7 +38,7 @@ class Circle{
         div.classList.add('d-none');
     }
     select(){
-        if(validDist(Math.sqrt(pow2((mouseX - this.pt1x)) + pow2((mouseY - this.pt1y)) - pow2(this.r)))){
+        if(validDist(Math.sqrt(pow2((mouseX - this.pt1x)) + pow2((mouseY - this.pt1y)) - pow2(this.r))), true){
             if(selectingObject.flag){
                 selectingObject.object.deSelect();
             }
@@ -59,5 +59,27 @@ class Circle{
         erase();
         circle(this.pt1x, this.pt1y, this.r*2);
         noErase();
+    }
+    rotate(angle){
+        this.clear();
+        stroke('red');
+        let original1X = this.pt1x;
+        let original1Y = this.pt1y;
+        this.goToOrigin();
+        this.draw();
+        let coords1 = rotatePoint(this.pt1x, this.pt1y, angle);
+        this.pt1x = coords1.x;
+        this.pt1y = coords1.y;
+        this.draw();
+        this.pt1x = this.pt1x+original1X;
+        this.pt1y = this.pt1x+original1Y;
+        this.draw();
+        stroke(defaultColor);
+    }
+    goToOrigin(){
+        this.pt1x -= (this.pt1x-this.r);
+        this.pt1y -= (this.pt1y-this.r);
+        this.pt2x -= this.pt1x;
+        this.pt2y -= this.pt1y;
     }
 }
