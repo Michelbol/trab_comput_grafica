@@ -58,8 +58,25 @@ class Line{
         line(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
     }
     clear(){
+        strokeWeight(3);
         erase();
         line(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
         noErase();
+        strokeWeight(weight);
+    }
+    rotate(angle){
+        this.clear();
+        stroke('red');
+        this.goToOrigin();
+        let rotateX = (this.pt2x*Math.cos(angle)) - (this.pt2y*Math.sin(angle));
+        let rotateY = (this.pt2x*Math.sin(angle)) + (this.pt2y*Math.cos(angle));
+        this.pt2x = rotateX+this.pt1x;
+        this.pt2y = rotateY+this.pt1y;
+        line(this.pt1x, this.pt1y, (this.pt2x), (this.pt2y));
+        stroke(defaultColor);
+    }
+    goToOrigin(){
+        this.pt2x -= this.pt1x;
+        this.pt2y -= this.pt1y;
     }
 }

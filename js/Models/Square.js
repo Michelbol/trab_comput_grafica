@@ -75,8 +75,26 @@ class Square{
         rect(this.pt1x, this.pt1y, this.width, this.height);
     }
     clear(){
+        strokeWeight(3);
         erase();
         rect(this.pt1x, this.pt1y, this.width, this.height);
         noErase();
+        strokeWeight(weight);
     }
+    // rotate(angle){
+    //     this.clear();
+    //     stroke('red');
+    //     this.goToOrigin();
+    //     this.draw();
+    //     let rotateX = (this.pt2x*Math.cos(angle)) - (this.pt2y*Math.sin(angle));
+    //     let rotateY = (this.pt2x*Math.sin(angle)) + (this.pt2y*Math.cos(angle));
+    //     this.pt2x = rotate2X+this.pt1x;
+    //     this.pt2y = rotate2Y+this.pt1y;
+    //     // line(this.pt1x, this.pt1y, (this.pt2x), (this.pt2y));
+    //     stroke(defaultColor);
+    // }
+    // goToOrigin(){
+    //     this.pt2x -= this.pt1x;
+    //     this.pt2y -= this.pt1y;
+    // }
 }

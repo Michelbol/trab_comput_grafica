@@ -48,9 +48,18 @@
 
 .tutorial{
     position: absolute;
-    margin-left: 700px;
+    margin-left: 850px;
     margin-top: 50px;
 }
 .d-none{
     display: none;
+}
+.action-inputs{
+    position: absolute;
+    margin-left: 700px;
+    margin-top: 50px;
+}
+
+.red {
+    color: red;
 }

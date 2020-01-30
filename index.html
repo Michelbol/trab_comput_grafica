@@ -5,13 +5,13 @@
     <title>Trabalho de Computação Gráfica</title>
     <script src="./lib/p5.min.js"></script>
     <script src="./lib/sketch.min.js"></script>
-    <script src="./js/sketch.js"></script>
-    <script src="./js/utils.js"></script>
     <script src="js/Models/Line.js"></script>
     <script src="js/Models/Triangle.js"></script>
     <script src="js/Models/Square.js"></script>
     <script src="js/Models/Circle.js"></script>
     <script src="./js/events.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/sketch.js"></script>
 
     <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -88,6 +88,20 @@
                 <li>Clique e solte para definir o diâmetro!.</li>
             </ul>
         </div>
+    </div>
+    <div class="action-inputs">
+<!--        <div id="div-scale" class="d-none">-->
+<!--            <label for="qtd-scale">Valor da Escala</label><br>-->
+<!--            <input type="text" id="qtd-scale">-->
+<!--            <button id="submit-scale">Rodar</button>-->
+<!--        </div>-->
+        <div id="div-rotate" class=" d-none">
+            <label for="qtd-rotate">Valor da Rotação</label><br>
+            <input type="number" id="qtd-rotate" placeholder="Coord em Graus Ex: 30">
+            <button id="submit-rotate">Rodar</button>
+            <span class="red d-none" id="error-rotate">Selecione um elemento!</span>
+        </div>
+
     </div>
     <div>
         <p id="coords"></p>

@@ -6,6 +6,7 @@ let btnRotate;
 let btnSquare;
 let btnCancel;
 let btnTriangle;
+let submitRotate;
 let btnTranslation;
 let btnCircumference;
 
@@ -25,6 +26,7 @@ function loadEvents(){
     btnCancel.addEventListener('click', clickBtnCancel);
     btnSquare.addEventListener('click', clickBtnSquare);
     btnTriangle.addEventListener('click', clickBtnTriangle);
+    submitRotate.addEventListener('click', clickSubmitRotate);
     btnTranslation.addEventListener('click', clickBtnTranslation);
     btnCircumference.addEventListener('click', clickBtnCircumference);
 }
@@ -38,6 +40,7 @@ function activeVariables(){
     btnSquare           = document.getElementById('btn-square');
     btnCancel           = document.getElementById('btn-cancel');
     btnTriangle         = document.getElementById('btn-triangle');
+    submitRotate        = document.getElementById('submit-rotate');
     btnTranslation      = document.getElementById('btn-translation');
     btnCircumference    = document.getElementById('btn-circumference');
 }
@@ -47,6 +50,16 @@ function clickBtnLine(){
     creatingObject.object = new Line();
     creatingObject.object.tutorialShow();
     disabledButtons(true);
+}
+
+function clickSubmitRotate(){
+    if(!selectingObject.flag){
+        document.getElementById('error-rotate').classList.remove('d-none');
+        return;
+    }
+    document.getElementById('error-rotate').classList.add('d-none');
+    let angle = document.getElementById('qtd-rotate');
+    selectingObject.object.rotate(degreesToRadians(angle.value));
 }
 
 function clickBtnClear(){
@@ -62,7 +75,7 @@ function clickBtnScale(){
 }
 
 function clickBtnRotate(){
-
+    document.getElementById('div-rotate').classList.toggle('d-none');
 }
 
 function clickBtnSquare(){
