@@ -129,4 +129,16 @@ class Triangle{
         reDraw();
         stroke(defaultColor);
     }
+    translate(qtdX, qtdY){
+        let coords1 = translatePoint(this.pt1x, this.pt1y, qtdX, qtdY);
+        this.pt1x = coords1.x;
+        this.pt1y = coords1.y;
+        let coords2 = translatePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords2.x;
+        this.pt2y = coords2.y;
+        let coords3 = translatePoint(this.pt3x, this.pt3y, qtdX, qtdY);
+        this.pt3x = coords3.x;
+        this.pt3y = coords3.y;
+        reDraw();
+    }
 }
