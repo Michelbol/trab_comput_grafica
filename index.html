@@ -90,16 +90,35 @@
         </div>
     </div>
     <div class="action-inputs">
-<!--        <div id="div-scale" class="d-none">-->
-<!--            <label for="qtd-scale">Valor da Escala</label><br>-->
-<!--            <input type="text" id="qtd-scale">-->
-<!--            <button id="submit-scale">Rodar</button>-->
-<!--        </div>-->
+        <div id="div-scale" class="d-none">
+            <fieldset>
+                <label for="qtd-scale-x">Valor da Escala X</label><br>
+                <input type="number" id="qtd-scale-x">
+                <br>
+                <label for="qtd-scale-y">Valor da Escala Y</label><br>
+                <input type="number" id="qtd-scale-y">
+                <button id="submit-scale">Aplicar</button>
+                <span class="red d-none" id="error-scale">Selecione um elemento!</span>
+            </fieldset>
+        </div>
+        <div id="div-translate" class="d-none">
+            <fieldset>
+                <label for="qtd-translate-x">Valor da Translação X</label><br>
+                <input type="number" id="qtd-translate-x">
+                <br>
+                <label for="qtd-translate-y">Valor da Translação Y</label><br>
+                <input type="number" id="qtd-translate-y">
+                <button id="submit-translate">Aplicar</button>
+                <span class="red d-none" id="error-translate">Selecione um elemento!</span>
+            </fieldset>
+        </div>
         <div id="div-rotate" class=" d-none">
-            <label for="qtd-rotate">Valor da Rotação</label><br>
-            <input type="number" id="qtd-rotate" placeholder="Coord em Graus Ex: 30">
-            <button id="submit-rotate">Rodar</button>
-            <span class="red d-none" id="error-rotate">Selecione um elemento!</span>
+            <fieldset>
+                <label for="qtd-rotate">Valor da Rotação</label><br>
+                <input type="number" id="qtd-rotate" placeholder="Coord em Graus Ex: 30">
+                <button id="submit-rotate">Rodar</button>
+                <span class="red d-none" id="error-rotate">Selecione um elemento!</span>
+            </fieldset>
         </div>
 
     </div>

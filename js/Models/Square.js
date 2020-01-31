@@ -34,8 +34,8 @@ class Square{
             creatingObject.object.pt4y = this.pt1y;
             creatingObject.object.width = this.pt3x - this.pt1x;
             creatingObject.object.height = this.pt3y - this.pt1y;
-            objects.squares.push(this);
-            creatingObject.object.draw();
+            objects.push(this);
+            reDraw();
             creatingObject.object.tutorialHidden();
             freeMouse();
             return;
@@ -98,7 +98,7 @@ class Square{
         let coords4 = rotatePoint(this.pt4x, this.pt4y, angle);
         this.pt4x = coords4.x+this.pt1x;
         this.pt4y = coords4.y+this.pt1y;
-        this.draw();
+        reDraw();
         stroke(defaultColor);
     }
     goToOrigin(){
@@ -108,5 +108,21 @@ class Square{
         this.pt3y -= this.pt1y;
         this.pt4x -= this.pt1x;
         this.pt4y -= this.pt1y;
+    }
+    scale(qtdX, qtdY){
+        this.clear();
+        stroke('red');
+        this.goToOrigin();
+        let coords2 = scalePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords2.x+this.pt1x;
+        this.pt2y = coords2.y+this.pt1y;
+        let coords3 = scalePoint(this.pt3x, this.pt3y, qtdX, qtdY);
+        this.pt3x = coords3.x+this.pt1x;
+        this.pt3y = coords3.y+this.pt1y;
+        let coords4 = scalePoint(this.pt4x, this.pt4y, qtdX, qtdY);
+        this.pt4x = coords4.x+this.pt1x;
+        this.pt4y = coords4.y+this.pt1y;
+        reDraw();
+        stroke(defaultColor);
     }
 }

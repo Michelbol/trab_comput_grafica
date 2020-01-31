@@ -2,13 +2,26 @@ let btnLine;
 let btnZoom;
 let btnClear;
 let btnScale;
+let divScale;
 let btnRotate;
 let btnSquare;
 let btnCancel;
+let divRotate;
 let btnTriangle;
+let inputScaleX;
+let inputScaleY;
+let inputRotate;
+let submitScale;
+let divTranslate;
 let submitRotate;
 let btnTranslation;
+let spanErrorScale;
+let inputTranslateX;
+let inputTranslateY;
+let spanErrorRotate;
+let submitTranslate;
 let btnCircumference;
+let spanErrorTranslate;
 
 window.onload = onLoad;
 
@@ -26,7 +39,9 @@ function loadEvents(){
     btnCancel.addEventListener('click', clickBtnCancel);
     btnSquare.addEventListener('click', clickBtnSquare);
     btnTriangle.addEventListener('click', clickBtnTriangle);
+    submitScale.addEventListener('click', clickSubmitScale);
     submitRotate.addEventListener('click', clickSubmitRotate);
+    submitTranslate.addEventListener('click', clickSubmitTranslate);
     btnTranslation.addEventListener('click', clickBtnTranslation);
     btnCircumference.addEventListener('click', clickBtnCircumference);
 }
@@ -36,13 +51,26 @@ function activeVariables(){
     btnZoom             = document.getElementById('btn-zoom');
     btnClear            = document.getElementById('btn-clear');
     btnScale            = document.getElementById('btn-scale');
+    divScale            = document.getElementById('div-scale');
     btnRotate           = document.getElementById('btn-rotate');
     btnSquare           = document.getElementById('btn-square');
     btnCancel           = document.getElementById('btn-cancel');
+    divRotate           = document.getElementById('div-rotate');
     btnTriangle         = document.getElementById('btn-triangle');
+    inputScaleX         = document.getElementById('qtd-scale-x');
+    inputScaleY         = document.getElementById('qtd-scale-y');
+    inputRotate         = document.getElementById('qtd-rotate');
+    submitScale         = document.getElementById('submit-scale');
+    divTranslate        = document.getElementById('div-translate');
     submitRotate        = document.getElementById('submit-rotate');
     btnTranslation      = document.getElementById('btn-translation');
+    spanErrorScale      = document.getElementById('error-rotate');
+    submitTranslate     = document.getElementById('submit-translate');
+    inputTranslateX     = document.getElementById('qtd-translate-x');
+    inputTranslateY     = document.getElementById('qtd-translate-y');
+    spanErrorRotate     = document.getElementById('error-rotate');
     btnCircumference    = document.getElementById('btn-circumference');
+    spanErrorTranslate  = document.getElementById('error-translate');
 }
 
 function clickBtnLine(){
@@ -54,16 +82,34 @@ function clickBtnLine(){
 
 function clickSubmitRotate(){
     if(!selectingObject.flag){
-        document.getElementById('error-rotate').classList.remove('d-none');
+        spanErrorRotate.classList.remove('d-none');
         return;
     }
-    document.getElementById('error-rotate').classList.add('d-none');
-    let angle = document.getElementById('qtd-rotate');
-    selectingObject.object.rotate(degreesToRadians(angle.value));
+    spanErrorRotate.classList.add('d-none');
+    selectingObject.object.rotate(degreesToRadians(parseInt(inputRotate.value)));
+}
+function clickSubmitScale(){
+    if(!selectingObject.flag){
+        spanErrorScale.classList.remove('d-none');
+        return;
+    }
+    spanErrorScale.classList.add('d-none');
+    selectingObject.object.scale(parseInt(inputScaleX.value), parseInt(inputScaleY.value));
+}
+function clickSubmitTranslate(){
+    if(!selectingObject.flag){
+        spanErrorTranslate.classList.remove('d-none');
+        return;
+    }
+    spanErrorTranslate.classList.add('d-none');
+    let valueX = inputTranslateX.value === null ? 0 : parseInt(inputTranslateX.value);
+    let valueY = inputTranslateY.value === "" ? 0 : parseInt(inputTranslateY.value);
+    selectingObject.object.translate(valueX, valueY);
 }
 
 function clickBtnClear(){
     setup();
+    clearVariables();
 }
 
 function clickBtnZoom(){
@@ -71,11 +117,11 @@ function clickBtnZoom(){
 }
 
 function clickBtnScale(){
-
+    divScale.classList.toggle('d-none');
 }
 
 function clickBtnRotate(){
-    document.getElementById('div-rotate').classList.toggle('d-none');
+    divRotate.classList.toggle('d-none');
 }
 
 function clickBtnSquare(){
@@ -93,7 +139,7 @@ function clickBtnTriangle(){
 }
 
 function clickBtnTranslation(){
-
+    divTranslate.classList.toggle('d-none');
 }
 
 function clickBtnCircumference(){
@@ -107,11 +153,14 @@ function clickBtnCancel(e){
     e.preventDefault();
     if(selectingObject.flag){
         selectingObject.object.deSelect();
+        selectingObject.object = null;
+        selectingObject.flag = false;
     }
     if(creatingObject.flag){
         creatingObject.object.tutorialHidden();
     }
     freeMouse();
+    reDraw();
 }
 
 function disabledButtons(boolean){
@@ -121,7 +170,10 @@ function disabledButtons(boolean){
     btnScale.disabled = boolean;
     btnRotate.disabled = boolean;
     btnSquare.disabled = boolean;
+    inputRotate.disabled = boolean;
     btnTriangle.disabled = boolean;
+    submitRotate.disabled = boolean;
+    btnTranslation.disabled = boolean;
     btnTranslation.disabled = boolean;
     btnCircumference.disabled = boolean;
 }

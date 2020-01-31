@@ -1,9 +1,8 @@
-let objects;
 let x = 0;
 const defaultColor = '#000000';
 const dist = 10;
 const weight = 1;
-let executionPipeline = [];
+// let executionPipeline = [];
 let creatingObject = {
    flag: false,
    object: null
@@ -14,6 +13,7 @@ let rotateObject = {
 };
 let selectingObject = newSelectingObject();
 let axisObject = newAxisObject();
+let objects = newObjects();
 
 function validDist(value){
     return value <= dist && value >= 0 || value >= -dist && value <= 0;
@@ -36,12 +36,7 @@ function newSelectingObject(){
 }
 
 function newObjects(){
-    return {
-        lines: [],
-        triangles: [],
-        squares: [],
-        circumferences: []
-    };
+    return [];
 }
 
 
@@ -51,31 +46,26 @@ function setup() {
     stroke(defaultColor);
     strokeWeight(weight);
     axis(0,0);
+}
+
+function clearVariables(){
     objects = newObjects();
     selectingObject = newSelectingObject();
 }
 
+/**
+ * @var e Event
+ * @param e
+ */
 function mousePressed(e) {
     if(e.toElement.tagName === 'CANVAS'){
         if(creatingObject.flag){
             creatingObject.object.setup();
             return;
         }
-        let linesLength = objects.lines.length;
-        for(let i = 0; i < linesLength; i++){
-            objects.lines[i].select();
-        }
-        let squaresLength = objects.squares.length;
-        for(let i = 0; i < squaresLength; i++){
-            objects.squares[i].select();
-        }
-        let trianglesLength = objects.triangles.length;
-        for(let i = 0; i < trianglesLength; i++){
-            objects.triangles[i].select();
-        }
-        let circumferencesLength = objects.circumferences.length;
-        for(let i = 0; i < circumferencesLength; i++){
-            objects.circumferences[i].select();
+        let objectsLength = objects.length;
+        for(let i = 0; i < objectsLength; i++){
+            objects[i].select();
         }
     }
 }
@@ -177,4 +167,21 @@ function removeNames(names){
 function removeAxis(){
     axisObject.lineX.clear();
     axisObject.lineY.clear();
+}
+
+function reDraw(){
+    setup();
+    drawObjects(objects);
+}
+
+function drawObjects(objects){
+    for (let i  = 0; i < objects.length; i++){
+        if(selectingObject.flag && selectingObject.object === objects[i]){
+            stroke('red');
+            objects[i].draw();
+            stroke(defaultColor);
+            continue;
+        }
+        objects[i].draw();
+    }
 }

@@ -19,23 +19,20 @@ class Triangle{
     setup(){
         if(isNumberFill(creatingObject.object.pt1x)){
             if(isNumberFill(creatingObject.object.pt2x)){
-                creatingObject.object.pt3x = mouseX;
-                creatingObject.object.pt3y = mouseY;
-                creatingObject.object.slope1_3 = parseFloat(((this.pt3y-this.pt1y)/(this.pt3x-this.pt1x)).toFixed(2));
-                creatingObject.object.slope2_3 = parseFloat(((this.pt2y-this.pt3y)/(this.pt2x-this.pt3x)).toFixed(2));
-                objects.triangles.push(this);
-                creatingObject.object.draw();
+                createAddPt3();
+                creatingObject.object.slope1_3 = calcSlope(this.pt1x, this.pt1y, this.pt3x, this.pt3y);
+                creatingObject.object.slope2_3 = calcSlope(this.pt3x, this.pt3y, this.pt2x, this.pt2y);
+                objects.push(this);
+                reDraw();
                 creatingObject.object.tutorialHidden();
                 freeMouse();
                 return;
             }
-            creatingObject.object.pt2x = mouseX;
-            creatingObject.object.pt2y = mouseY;
-            creatingObject.object.slope2_1 = parseFloat(((this.pt2y-this.pt1y)/(this.pt2x-this.pt1x)).toFixed(2));
+            createAddPt2();
+            creatingObject.object.slope2_1 = calcSlope(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
             return;
         }
-        creatingObject.object.pt1x = mouseX;
-        creatingObject.object.pt1y = mouseY;
+        createAddPt1();
     }
 
     tutorialShow(){
@@ -110,7 +107,7 @@ class Triangle{
         let coords3 = rotatePoint(this.pt3x, this.pt3y, angle);
         this.pt3x = coords3.x+this.pt1x;
         this.pt3y = coords3.y+this.pt1y;
-        this.draw();
+        reDraw();
         stroke(defaultColor);
     }
     goToOrigin(){
@@ -118,5 +115,18 @@ class Triangle{
         this.pt2y -= this.pt1y;
         this.pt3x -= this.pt1x;
         this.pt3y -= this.pt1y;
+    }
+    scale(qtdX, qtdY){
+        this.clear();
+        stroke('red');
+        this.goToOrigin();
+        let coords2 = scalePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords2.x+this.pt1x;
+        this.pt2y = coords2.y+this.pt1y;
+        let coords3 = scalePoint(this.pt3x, this.pt3y, qtdX, qtdY);
+        this.pt3x = coords3.x+this.pt1x;
+        this.pt3y = coords3.y+this.pt1y;
+        reDraw();
+        stroke(defaultColor);
     }
 }

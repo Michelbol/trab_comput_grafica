@@ -20,7 +20,7 @@ class Circle{
             let catB = this.pt2y - this.pt1y;
             let hypt = Math.pow(catA, 2) + Math.pow(catB, 2);
             this.r = Math.sqrt(hypt);
-            objects.circumferences.push(this);
+            objects.push(this);
             creatingObject.object.draw();
             creatingObject.object.tutorialHidden();
             freeMouse();
@@ -38,7 +38,7 @@ class Circle{
         div.classList.add('d-none');
     }
     select(){
-        if(validDist(Math.sqrt(pow2((mouseX - this.pt1x)) + pow2((mouseY - this.pt1y)) - pow2(this.r))), true){
+        if(validDist(Math.sqrt(pow2((mouseX - this.pt1x)) + pow2((mouseY - this.pt1y)) - pow2(this.r)), true)){
             if(selectingObject.flag){
                 selectingObject.object.deSelect();
             }

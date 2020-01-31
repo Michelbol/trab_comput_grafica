@@ -13,17 +13,15 @@ class Line{
 
     setup(){
         if(isNumberFill(creatingObject.object.pt1x)){
-            creatingObject.object.pt2x = mouseX;
-            creatingObject.object.pt2y = mouseY;
-            creatingObject.object.slope = parseFloat(((this.pt2y-this.pt1y)/(this.pt2x-this.pt1x)).toFixed(2));
-            objects.lines.push(this);
-            creatingObject.object.draw();
+            createAddPt2();
+            creatingObject.object.slope = calcSlope(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
+            objects.push(this);
+            reDraw();
             creatingObject.object.tutorialHidden();
             freeMouse();
             return;
         }
-        creatingObject.object.pt1x = mouseX;
-        creatingObject.object.pt1y = mouseY;
+        createAddPt1();
     }
 
     tutorialShow(){
@@ -44,18 +42,14 @@ class Line{
             }
             selectingObject.flag = true;
             selectingObject.object = this;
-            this.clear();
-            stroke('red');
-            line(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
-            stroke(defaultColor);
+            reDraw();
             return true;
         }
         return false;
     }
     deSelect(){
-        this.clear();
-        stroke(defaultColor);
-        line(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
+        selectingObject.flag = false;
+        selectingObject.object = null;
     }
     clear(){
         strokeWeight(3);
@@ -65,17 +59,30 @@ class Line{
         strokeWeight(weight);
     }
     rotate(angle){
-        this.clear();
-        stroke('red');
         this.goToOrigin();
         let coords = rotatePoint(this.pt2x, this.pt2y, angle);
         this.pt2x = coords.x+this.pt1x;
         this.pt2y = coords.y+this.pt1y;
-        this.draw();
-        stroke(defaultColor);
+        reDraw();
     }
     goToOrigin(){
         this.pt2x -= this.pt1x;
         this.pt2y -= this.pt1y;
+    }
+    scale(qtdX, qtdY){
+        this.goToOrigin();
+        let coords = scalePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords.x+this.pt1x;
+        this.pt2y = coords.y+this.pt1y;
+        reDraw();
+    }
+    translate(qtdX, qtdY){
+        let coords1 = translatePoint(this.pt1x, this.pt1y, qtdX, qtdY);
+        this.pt1x = coords1.x;
+        this.pt1y = coords1.y;
+        let coords2 = translatePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords2.x;
+        this.pt2y = coords2.y;
+        reDraw();
     }
 }
