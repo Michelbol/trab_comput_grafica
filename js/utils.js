@@ -36,11 +36,17 @@ function createAddPt1(){
     creatingObject.object.pt1x = mouseX;
     creatingObject.object.pt1y = mouseY;
 }
+
 function createAddPt2(){
     creatingObject.object.pt2x = mouseX;
     creatingObject.object.pt2y = mouseY;
 }
+
 function createAddPt3(){
     creatingObject.object.pt3x = mouseX;
     creatingObject.object.pt3y = mouseY;
+}
+
+function stringToInt(value){
+    return isNaN(parseInt(value)) ? 0 : parseInt(value);
 }

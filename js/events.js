@@ -64,7 +64,7 @@ function activeVariables(){
     divTranslate        = document.getElementById('div-translate');
     submitRotate        = document.getElementById('submit-rotate');
     btnTranslation      = document.getElementById('btn-translation');
-    spanErrorScale      = document.getElementById('error-rotate');
+    spanErrorScale      = document.getElementById('error-scale');
     submitTranslate     = document.getElementById('submit-translate');
     inputTranslateX     = document.getElementById('qtd-translate-x');
     inputTranslateY     = document.getElementById('qtd-translate-y');
@@ -85,29 +85,33 @@ function clickSubmitRotate(){
         spanErrorRotate.classList.remove('d-none');
         return;
     }
+    storePipeline();
     spanErrorRotate.classList.add('d-none');
-    selectingObject.object.rotate(degreesToRadians(parseInt(inputRotate.value)));
+    selectingObject.object.rotate(degreesToRadians(stringToInt(inputRotate.value)));
 }
 function clickSubmitScale(){
     if(!selectingObject.flag){
         spanErrorScale.classList.remove('d-none');
         return;
     }
+    storePipeline();
     spanErrorScale.classList.add('d-none');
-    selectingObject.object.scale(parseInt(inputScaleX.value), parseInt(inputScaleY.value));
+    if(stringToInt(inputScaleX.value) !== 0 && stringToInt(inputScaleY.value) !== 0){
+        selectingObject.object.scale(stringToInt(inputScaleX.value), stringToInt(inputScaleY.value));
+    }
 }
 function clickSubmitTranslate(){
     if(!selectingObject.flag){
         spanErrorTranslate.classList.remove('d-none');
         return;
     }
+    storePipeline();
     spanErrorTranslate.classList.add('d-none');
-    let valueX = inputTranslateX.value === null ? 0 : parseInt(inputTranslateX.value);
-    let valueY = inputTranslateY.value === "" ? 0 : parseInt(inputTranslateY.value);
-    selectingObject.object.translate(valueX, valueY);
+    selectingObject.object.translate(stringToInt(inputTranslateX.value), stringToInt(inputTranslateY.value));
 }
 
 function clickBtnClear(){
+    storePipeline();
     setup();
     clearVariables();
 }

@@ -2,7 +2,7 @@ let x = 0;
 const defaultColor = '#000000';
 const dist = 10;
 const weight = 1;
-// let executionPipeline = [];
+let executionPipeline = [];
 let creatingObject = {
    flag: false,
    object: null
@@ -15,7 +15,43 @@ let selectingObject = newSelectingObject();
 let axisObject = newAxisObject();
 let objects = newObjects();
 
-function validDist(value){
+document.onkeypress = KeyPress;
+
+function KeyPress(e) {
+    var evtobj = window.event? event : e
+
+    if (evtobj.keyCode === 26 && evtobj.ctrlKey){
+        rollbackPipeline();
+    }
+}
+
+function rollbackPipeline(){
+    if(executionPipeline.length > 0){
+        objects = executionPipeline.pop();
+        reDraw();
+    }
+}
+
+function storePipeline(){
+    let newObjects = [];
+    for(let i = 0; i < objects.length; i++){
+        newObjects.push(Object.assign( Object.create( Object.getPrototypeOf(objects[i])), objects[i]));
+    }
+    if(executionPipeline.length < 100){
+        executionPipeline.push(newObjects);
+        return;
+    }
+    executionPipeline.push(newObjects);
+    executionPipeline.shift();
+}
+
+function validDist(value, isCircle){
+    if(isCircle){
+        if(isNaN(value)){
+            return true;
+        }
+        return value <= dist+5 && value >= 0 || value >= -dist-5 && value <= 0;
+    }
     return value <= dist && value >= 0 || value >= -dist && value <= 0;
 }
 

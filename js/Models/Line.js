@@ -15,6 +15,7 @@ class Line{
         if(isNumberFill(creatingObject.object.pt1x)){
             createAddPt2();
             creatingObject.object.slope = calcSlope(this.pt1x, this.pt1y, this.pt2x, this.pt2y);
+            storePipeline();
             objects.push(this);
             reDraw();
             creatingObject.object.tutorialHidden();
@@ -84,5 +85,13 @@ class Line{
         this.pt2x = coords2.x;
         this.pt2y = coords2.y;
         reDraw();
+    }
+    zoom(){
+        var pt = ctx.transformedPoint(lastX,lastY);
+        ctx.translate(pt.x,pt.y);
+        var factor = Math.pow(scaleFactor,clicks);
+        ctx.scale(factor,factor);
+        ctx.translate(-pt.x,-pt.y);
+        redraw();
     }
 }

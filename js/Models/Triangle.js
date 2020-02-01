@@ -22,6 +22,7 @@ class Triangle{
                 createAddPt3();
                 creatingObject.object.slope1_3 = calcSlope(this.pt1x, this.pt1y, this.pt3x, this.pt3y);
                 creatingObject.object.slope2_3 = calcSlope(this.pt3x, this.pt3y, this.pt2x, this.pt2y);
+                storePipeline();
                 objects.push(this);
                 reDraw();
                 creatingObject.object.tutorialHidden();
@@ -78,17 +79,13 @@ class Triangle{
             }
             selectingObject.flag = true;
             selectingObject.object = this;
-            this.clear();
-            stroke('red');
-            triangle(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y);
-            stroke(defaultColor);
+            reDraw();
         }
         return false;
     }
     deSelect(){
-        this.clear();
-        stroke(defaultColor);
-        triangle(this.pt1x, this.pt1y, this.pt2x, this.pt2y, this.pt3x, this.pt3y);
+        selectingObject.flag = false;
+        selectingObject.object = null;
     }
     clear(){
         strokeWeight(3);
@@ -98,8 +95,6 @@ class Triangle{
         strokeWeight(weight);
     }
     rotate(angle){
-        this.clear();
-        stroke('red');
         this.goToOrigin();
         let coords2 = rotatePoint(this.pt2x, this.pt2y, angle);
         this.pt2x = coords2.x+this.pt1x;
@@ -108,7 +103,6 @@ class Triangle{
         this.pt3x = coords3.x+this.pt1x;
         this.pt3y = coords3.y+this.pt1y;
         reDraw();
-        stroke(defaultColor);
     }
     goToOrigin(){
         this.pt2x -= this.pt1x;
@@ -117,8 +111,6 @@ class Triangle{
         this.pt3y -= this.pt1y;
     }
     scale(qtdX, qtdY){
-        this.clear();
-        stroke('red');
         this.goToOrigin();
         let coords2 = scalePoint(this.pt2x, this.pt2y, qtdX, qtdY);
         this.pt2x = coords2.x+this.pt1x;
@@ -127,7 +119,6 @@ class Triangle{
         this.pt3x = coords3.x+this.pt1x;
         this.pt3y = coords3.y+this.pt1y;
         reDraw();
-        stroke(defaultColor);
     }
     translate(qtdX, qtdY){
         let coords1 = translatePoint(this.pt1x, this.pt1y, qtdX, qtdY);

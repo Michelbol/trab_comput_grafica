@@ -11,17 +11,21 @@ class Circle{
     draw() {
         circle(this.pt1x, this.pt1y, this.r*2);
     }
+    calcRadio(){
+        let catA = this.pt2x - this.pt1x;
+        let catB = this.pt2y - this.pt1y;
+        let hypt = Math.pow(catA, 2) + Math.pow(catB, 2);
+        this.r = Math.sqrt(hypt);
+    }
 
     setup(){
         if(isNumberFill(creatingObject.object.pt1x)){
             creatingObject.object.pt2x = mouseX;
             creatingObject.object.pt2y = mouseY;
-            let catA = this.pt2x - this.pt1x;
-            let catB = this.pt2y - this.pt1y;
-            let hypt = Math.pow(catA, 2) + Math.pow(catB, 2);
-            this.r = Math.sqrt(hypt);
+            this.calcRadio();
+            storePipeline();
             objects.push(this);
-            creatingObject.object.draw();
+            reDraw();
             creatingObject.object.tutorialHidden();
             freeMouse();
             return;
@@ -44,16 +48,12 @@ class Circle{
             }
             selectingObject.flag = true;
             selectingObject.object = this;
-            this.clear();
-            stroke('red');
-            circle(this.pt1x, this.pt1y, this.r*2);
-            stroke(defaultColor);
+            reDraw();
         }
     }
     deSelect(){
-        this.clear();
-        stroke(defaultColor);
-        circle(this.pt1x, this.pt1y, this.r*2);
+        selectingObject.flag = false;
+        selectingObject.object = null;
     }
     clear(){
         erase();
@@ -61,25 +61,27 @@ class Circle{
         noErase();
     }
     rotate(angle){
-        this.clear();
-        stroke('red');
-        let original1X = this.pt1x;
-        let original1Y = this.pt1y;
-        this.goToOrigin();
-        this.draw();
-        let coords1 = rotatePoint(this.pt1x, this.pt1y, angle);
-        this.pt1x = coords1.x;
-        this.pt1y = coords1.y;
-        this.draw();
-        this.pt1x = this.pt1x+original1X;
-        this.pt1y = this.pt1x+original1Y;
-        this.draw();
-        stroke(defaultColor);
+        reDraw();
     }
     goToOrigin(){
-        this.pt1x -= (this.pt1x-this.r);
-        this.pt1y -= (this.pt1y-this.r);
         this.pt2x -= this.pt1x;
         this.pt2y -= this.pt1y;
+    }
+    translate(qtdX, qtdY){
+        let coords1 = translatePoint(this.pt1x, this.pt1y, qtdX, qtdY);
+        this.pt1x = coords1.x;
+        this.pt1y = coords1.y;
+        let coords2 = translatePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords2.x;
+        this.pt2y = coords2.y;
+        reDraw();
+    }
+    scale(qtdX, qtdY){
+        this.goToOrigin();
+        let coords = scalePoint(this.pt2x, this.pt2y, qtdX, qtdY);
+        this.pt2x = coords.x+this.pt1x;
+        this.pt2y = coords.y+this.pt1y;
+        this.calcRadio();
+        reDraw();
     }
 }
